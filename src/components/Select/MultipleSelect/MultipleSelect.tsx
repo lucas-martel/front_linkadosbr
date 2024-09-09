@@ -22,22 +22,25 @@ const MenuProps = {
 
 interface Prop {
   label: string;
+  /**
+   * is important pass a select option for all selects tha value is 0
+   */
   selectOptions: TSelectOption[];
-  initOptionsSelecteds: TSelectOption[];
   onChange: (values: string[]) => void;
 }
 
 export default function MultipleSelect(props: Prop) {
   const { handleChange, targets } = useMultiSelect({
-    allOptions: props.selectOptions.map((opt) => opt.value),
-    initTargets: props.initOptionsSelecteds.map((opt) => opt.value),
+    options: props.selectOptions.map((opt) => opt.value),
     onChange: props.onChange,
   });
 
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id={`checkbox-label${props.label}`}>{props.label}</InputLabel>
+        <InputLabel id={`checkbox-label${props.label}`}>
+          {props.label}
+        </InputLabel>
         <Select
           labelId={`checkbox-label${props.label}`}
           id={`checkbox-label-select-${props.label}`}
@@ -45,16 +48,16 @@ export default function MultipleSelect(props: Prop) {
           value={targets}
           onChange={handleChange}
           input={<OutlinedInput label={props.label} />}
-          renderValue={(selected) => "selecionados"}
+          renderValue={(selected) =>
+            `${selected.length} ${props.label}${
+              selected.length > 1 ? "s " : " "
+            } selecionada(s)`
+          }
           MenuProps={MenuProps}
         >
-          <MenuItem key={"tudo"} value={"0"}>
-            <Checkbox checked={targets.indexOf("0") !== -1} />
-            <ListItemText primary={"tudo"} />
-          </MenuItem>
           {props.selectOptions.map((opt) => (
             <MenuItem key={opt.label} value={opt.value}>
-              <Checkbox checked={targets.indexOf(opt.value) > -1} />
+              <Checkbox checked={targets.includes(opt.value)} />
               <ListItemText primary={opt.label} />
             </MenuItem>
           ))}

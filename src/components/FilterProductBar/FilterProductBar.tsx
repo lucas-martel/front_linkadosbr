@@ -1,47 +1,34 @@
 import { Box } from "@mui/material";
-import React, { useMemo } from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
 
 //COMPONENTS
 import MultipleSelect from "../Select/MultipleSelect/MultipleSelect";
 
-//TYPES
-import TAPI from "@/types/TAPI";
+//HOOKS
+import useFilter, { PropUseFilter } from "./Hooks/useFilter";
 
-//FUNCTIONS
-import convertCategoryToSelectOpt from "@/functions/convertTypes/convertCategoryToSelectOpt";
-import convertSubCategoryToSelectOpts from "@/functions/convertTypes/convertSubCategoryToSelect";
-
-interface Prop {
-  data: TAPI;
-  onChangeCategory: (categoryIds: string[]) => void;
-  onChangeSubCategory: (subCategoryIds: string[]) => void;
-}
-
-const FilterProductBar = (props: Prop) => {
-  const iniCatOpts = useMemo(
-    () => convertCategoryToSelectOpt(props.data.categories),
-    [props.data.categories]
-  );
-  const iniSubOpts = useMemo(
-    () => convertSubCategoryToSelectOpts(props.data.subs),
-    [props.data.subs]
-  );
+const FilterProductBar = (props: PropUseFilter) => {
+  const {
+    selectCatOpts,
+    onChangeSelectCategory,
+    onChangeSelectSubCategories,
+    subCategoriesOnView,
+  } = useFilter(props);
 
   return (
     <>
       <Box display={"flex"}>
         <MultipleSelect
           label="Categoria"
-          initOptionsSelecteds={iniCatOpts}
-          onChange={props.onChangeCategory}
-          selectOptions={iniCatOpts}
+          onChange={onChangeSelectCategory}
+          selectOptions={selectCatOpts}
         />
 
         <MultipleSelect
+          key={subCategoriesOnView.join()}
           label="Sub-Categoria"
-          initOptionsSelecteds={iniSubOpts}
-          onChange={props.onChangeSubCategory}
-          selectOptions={convertSubCategoryToSelectOpts(props.data.subs)}
+          onChange={onChangeSelectSubCategories}
+          selectOptions={subCategoriesOnView}
         />
       </Box>
     </>

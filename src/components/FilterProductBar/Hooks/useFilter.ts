@@ -1,41 +1,52 @@
+import convertCategoryToSelectOpt from "@/functions/convertTypes/convertCategoryToSelectOpt";
+import convertSubCategoryToSelectOpts from "@/functions/convertTypes/convertSubCategoryToSelect";
+import TAPI from "@/types/TAPI";
+import TCategory from "@/types/TCategory";
 import TProduct from "@/types/TProduct";
+import TSelectOption from "@/types/TSelectOption";
 import TSubCategory from "@/types/TSubCategory";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 
-interface Prop {
-  products: TProduct[];
-  subCategories: TSubCategory[];
+export interface PropUseFilter {
+  // products: TProduct[];
+  // categories: TCategory[];
+  // subCategories: TSubCategory[];
+  data: TAPI;
+  setProductsOnView: Dispatch<SetStateAction<TProduct[]>>;
 }
 
-const useFilter = (props: Prop) => {
-  const [productOnView, setProductOnView] = useState<TProduct[]>([]);
+const useFilter = (props: PropUseFilter) => {
+  const selectCatOpts = useMemo(
+    () => convertCategoryToSelectOpt(props.data.categories),
+    [props.data.categories]
+  );
+
   const [subCategoriesOnView, setSubCategoriesOnView] = useState<
-    TSubCategory[]
+    TSelectOption[]
   >([]);
 
   const onChangeSelectCategory = (categoryIds: string[]) => {
-    const filtered = props.subCategories.filter(
-      (sc) => categoryIds.indexOf(String(sc.categoryID)) !== -1
+    const filtered = props.data.subs.filter((sc) =>
+      categoryIds.includes(String(sc.categoryID))
     );
-    onChangeSelectSubCategories(filtered.map((f) => String(f.id)));
+    setSubCategoriesOnView(convertSubCategoryToSelectOpts(filtered));
   };
 
   const onChangeSelectSubCategories = (subCategoryIds: string[]) => {
-    setProductOnView(
-      props.products.filter(
-        (p) => subCategoryIds.indexOf(String(p.subcategoryID)) !== -1
-      )
+    const products = props.data.products.filter((p) =>
+      subCategoryIds.includes(String(p.subcategoryID))
     );
-    setSubCategoriesOnView(
-      props.subCategories.filter(
-        (s) => subCategoryIds.indexOf(String(s.id)) !== -1
-      )
-    );
+
+    props.setProductsOnView(products);
   };
 
+  useEffect(() => {
+    onChangeSelectSubCategories(subCategoriesOnView.map((s) => s.value));
+  }, [subCategoriesOnView]);
+
   return {
+    selectCatOpts,
     subCategoriesOnView,
-    productOnView,
     onChangeSelectCategory,
     onChangeSelectSubCategories,
   };

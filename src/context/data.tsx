@@ -27,10 +27,21 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   const RequestData = async () => {
     const data = sessionStorage.getItem(datakeyName);
     if (data === null) {
-      const dataAPI = await axios.get(urlData);
-      const realData = dataAPI.data as TAPI;
-      setDataBase(realData);
-      sessionStorage.setItem(datakeyName, JSON.stringify(realData));
+      try {
+        const dataAPI = await axios.get(urlData);
+        const realData = dataAPI.data as TAPI;
+        setDataBase(realData);
+        sessionStorage.setItem(datakeyName, JSON.stringify(realData));
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response) {
+            if (error.response.status === 429) {
+              sessionStorage.setItem("error", "429");
+              console.log("limite maximo de acesso ao servidor atigindo");
+            }
+          }
+        }
+      }
     } else {
       setDataBase(JSON.parse(data));
     }

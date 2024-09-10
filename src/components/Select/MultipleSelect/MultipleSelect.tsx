@@ -9,13 +9,13 @@ import Checkbox from "@mui/material/Checkbox";
 import TSelectOption from "@/types/TSelectOption";
 import useMultiSelect from "./Hooks/useMultiSelect";
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
     style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      maxHeight: ITEM_HEIGHT * 4.8 + ITEM_PADDING_TOP,
+      width: 25,
     },
   },
 };
@@ -49,11 +49,11 @@ export default function MultipleSelect(props: Prop) {
           onChange={handleChange}
           input={<OutlinedInput label={props.label} />}
           renderValue={(selected) =>
-            `${selected.length} ${props.label}${
+            `${selected.includes("0") ? selected.length - 1 : selected.length} ${props.label}${
               selected.length > 1 ? "s " : " "
             } selecionada(s)`
           }
-          MenuProps={MenuProps}
+          // MenuProps={MenuProps}
         >
           {props.selectOptions.map((opt) => (
             <MenuItem key={opt.label} value={opt.value}>

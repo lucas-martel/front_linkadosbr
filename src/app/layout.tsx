@@ -37,7 +37,7 @@ export default function RootLayout({
           <Box
             display="grid"
             gridTemplateAreas={`"menu" "app"`}
-            gridTemplateRows="6vh 94vh"
+            gridTemplateRows="10vh 90vh"
           >
             <Box gridArea={"menu"}>
               <MenuApp navOptions={optionsMenu} />

@@ -11,63 +11,42 @@ interface Prop {
 }
 
 const useMultiSelect = (prop: Prop) => {
-  const [targets, setTargets] = useState<string[]>(prop.options);
+  const [visibleOptions, setVisibleOptions] = useState<string[]>(prop.options);
 
-  const handleChange = (event: SelectChangeEvent<typeof targets>) => {
+  const handleChange = (event: SelectChangeEvent<typeof visibleOptions>) => {
     const {
       target: { value },
     } = event;
 
-    const values: string[] =
+    const options: string[] =
       typeof value === "string" ? value.split(",") : value;
-    controllSelects(values);
-    // if (values.indexOf("0") !== -1) {
-    //   if (targets.indexOf("0") === -1) {
-    //     //marcou todos os items
-    //     setTargets(prop.options);
-    //   } else {
-    //     //removeu um item quando todos estavam marcados
-    //     setTargets(values.filter((v) => v !== "0"));
-    //   }
-    // } else {
-    //   if (targets.indexOf("0") !== -1) {
-    //     setTargets([]);
-    //   } else if (values.length === prop.options.length) {
-    //     // marcou todos os items porem o todos nao esta marcado
-    //     setTargets(prop.options);
-    //   } else {
-    //     setTargets(values);
-    //   }
-    // }
+    controllSelects(options);
   };
 
-  const controllSelects = (values: string[]) => {
-    if (values.indexOf("0") !== -1) {
-      if (targets.indexOf("0") === -1) {
-        //marcou todos os items
-        setTargets(prop.options);
-      } else {
-        //removeu um item quando todos estavam marcados
-        setTargets(values.filter((v) => v !== "0"));
+  const controllSelects = (options: string[]) => {
+    if (options.includes("0")) { //OPÇÃO TODO ESTÁ MARCADA
+      if (!visibleOptions.includes("0")) { //MARCOU TODOS OS ITENS
+        setVisibleOptions(prop.options);
+      } else { //REMOVEU UM ITEM QUADO TODOS ESTAVAM MARCADOS
+        setVisibleOptions(options.filter((v) => v !== "0"));
       }
-    } else {
-      if (targets.indexOf("0") !== -1) {
-        setTargets([]);
-      } else if (values.length === prop.options.length) {
-        // marcou todos os items porem o todos nao esta marcado
-        setTargets(prop.options);
+    } else { //OPÇÃO TODO NÃO ESTÁ MARCADA
+      if (visibleOptions.includes("0")) { //TODOS FOI REMOVIDO DA OPCAO DO USUÁRIO, E TODOS AS OPÇÕES DEVEM SER DESMARCADAS  
+        setVisibleOptions([]);
+      } else if ((options.length + 1) === prop.options.length) { // TODOS OS ITEMS DEVEM ESTÁ MARCADOS
+        setVisibleOptions(prop.options);
       } else {
-        setTargets(values);
+        setVisibleOptions(options);
       }
     }
   };
 
   useEffect(() => {
-    prop.onChange(targets);
-  }, [targets]);
+    prop.onChange(visibleOptions);
+  }, [visibleOptions]);
 
   return {
-    targets,
+    targets: visibleOptions,
     handleChange,
   };
 };

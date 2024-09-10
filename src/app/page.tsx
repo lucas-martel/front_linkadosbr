@@ -12,6 +12,7 @@ import FilterProductBar from "@/components/FilterProductBar/FilterProductBar";
 import useFilter from "@/components/FilterProductBar/Hooks/useFilter";
 import TProduct from "@/types/TProduct";
 import { Box } from "@mui/material";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const data = useContext(DataContext);
@@ -19,30 +20,36 @@ export default function Home() {
 
   // const searchParams = useSearchParams();
 
+  if (!data) {
+    return <div>carregando...</div>;
+  }
+
   return (
     <>
-      {data && (
-        <Box
-          sx={{
-            width: '100%',
-            height: '100%',
-            display: "grid",
-            gridTemplateAreas: `"filter"
+      {data.categories.length > 0 &&
+        data.subs.length > 0 &&
+        data.products.length > 0 && (
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "grid",
+              gridTemplateAreas: `"filter"
                               "viewer"`,
-            gridTemplateRows: "10% 90%"
-          }}
-        >
-          <Box gridArea={"filter"}>
-            <FilterProductBar
-              data={data}
-              setProductsOnView={setProductsOnView}
-            />
+              gridTemplateRows: "10% 90%",
+            }}
+          >
+            <Box gridArea={"filter"}>
+              <FilterProductBar
+                data={data}
+                setProductsOnView={setProductsOnView}
+              />
+            </Box>
+            <Box gridArea={"viewer"}>
+              <ProductViewer products={productsOnView} />
+            </Box>
           </Box>
-          <Box gridArea={"viewer"}>
-            <ProductViewer products={productsOnView} />
-          </Box>
-        </Box>
-      )}
+        )}
     </>
   );
 }

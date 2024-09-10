@@ -63,10 +63,10 @@ function MenuApp(props: Prop) {
           gap={"20px"}
         >
           <Typography variant="h4" color={Colors.orange}>
-            BRink
+            BRLink
           </Typography>
           <Typography variant="subtitle2">
-            os melhores links de produtos
+            os melhores links dos melhores produtos
           </Typography>
         </Box>
         <Box>

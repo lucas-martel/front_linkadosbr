@@ -1,9 +1,10 @@
-import { TypeProduct } from "@/types/TypesDataBase";
+import TProduct from "@/types/TProduct";
+import TUrlProductParams from "@/types/TUrlProductParams";
 import { useEffect, useState } from "react";
 
 interface Props {
   itensPerPage: number;
-  allProducts: TypeProduct[];
+  allProducts: TProduct[];
 }
 
 const usePagination = (props: Props) => {
@@ -13,7 +14,14 @@ const usePagination = (props: Props) => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [products, setProducts] = useState<TypeProduct[]>([]);
+  const [products, setProducts] = useState<TProduct[]>([]);
+
+  useEffect(() => {
+    console.log(
+      "produtos renderizados na primeira interacao: ",
+      props.allProducts
+    );
+  }, []);
 
   useEffect(() => {
     setCountPagination(

@@ -6,6 +6,7 @@ type TAPI = {
   categories: TCategory[];
   products: TProduct[];
   subs: TSubCategory[];
+  requestData?: (resetData: boolean) => Promise<void>;
 };
 
 export default TAPI;

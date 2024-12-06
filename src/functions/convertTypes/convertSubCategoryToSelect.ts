@@ -6,11 +6,10 @@ const convertSubCategoryToSelectOpts = (
 ): TSelectOption[] => {
   const opts: TSelectOption[] = subCategory.map((opt) => ({
     label: opt.title,
-    value: String(opt.id),
-    isChecked: true,
+    value: String(opt.id)
   }));
 
-  return [{ label: "tudo", isChecked: true, value: "0" }, ...opts];
+  return [{ label: "tudo", value: "0" }, ...opts];
 };
 
 export default convertSubCategoryToSelectOpts;

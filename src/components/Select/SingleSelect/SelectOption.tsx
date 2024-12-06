@@ -2,16 +2,19 @@
 import { Box, FormControl, InputLabel, MenuItem } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useState } from "react";
-import TypeSelectOption from "@/types/TypeSelectOption";
+import TSelectOption from "@/types/TSelectOption";
+import { useTheme } from "@mui/system";
 
 interface Prop {
   selectLabel: string;
-  items: TypeSelectOption[];
+  items: TSelectOption[];
   resetOnAlterItems: boolean;
   onChange: (value: string) => void;
 }
 
 function SelectOption(props: Prop) {
+  const theme = useTheme();
+
   const [options, setOptions] = useState("");
 
   useEffect(() => {
@@ -26,8 +29,8 @@ function SelectOption(props: Prop) {
   };
 
   return (
-    <FormControl variant="standard" fullWidth>
-      <InputLabel id="product">{props.selectLabel}</InputLabel>
+    <FormControl variant="standard" size="small" sx={{ minWidth: theme.spacing(20) }}>
+      <InputLabel>{props.selectLabel}</InputLabel>
       <Select label={props.selectLabel} value={options} onChange={handleChange}>
         {props.items.map((item, key) => (
           <MenuItem key={key} value={item.value}>

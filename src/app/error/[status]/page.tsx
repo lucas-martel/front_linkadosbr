@@ -1,7 +1,12 @@
-"use client";
+// "use client";
 
 import React from "react";
 import { useParams } from "next/navigation";
+
+export function generateStaticParams() {
+  // Defina os parâmetros que deseja pre-renderizar
+  return [{ status: "429" }, { status: "500" }];
+}
 
 function getMsg(status: string): string {
   switch (status) {
@@ -13,11 +18,8 @@ function getMsg(status: string): string {
   return "";
 }
 
-function Error() {
-  const params = useParams();
-  const { status: string } = params;
-
-  return <div>{getMsg(status)}</div>;
+function Error({ params }: { params: { status: string } }) {
+  return <div>{getMsg(params.status)}</div>;
 }
 
 export default Error;

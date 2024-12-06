@@ -42,6 +42,7 @@ export default function MultipleSelect(props: Prop) {
           {props.label}
         </InputLabel>
         <Select
+          size="small"
           labelId={`checkbox-label${props.label}`}
           id={`checkbox-label-select-${props.label}`}
           multiple

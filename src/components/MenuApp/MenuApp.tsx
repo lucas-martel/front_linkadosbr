@@ -7,8 +7,11 @@ import {
   BottomNavigationAction,
   Box,
   Stack,
+  SxProps,
   Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
@@ -19,55 +22,49 @@ import {
   useEffect,
   useState,
 } from "react";
-import TypeMenuNav from "@/types/TypeMenuNav";
+import TypeMenuNav from "@/types/TMenuNav";
 import Colors from "@/Variables/Colors";
-
+import useMenu from "./Hooks/useMenu";
 
 interface Prop {
   navOptions: TypeMenuNav[];
 }
 
+const menuContainerStyle: SxProps = {
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "0 0.5em",
+};
+
+const titleStyle: SxProps = {
+  maxWidth: "60%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "0.1em",
+  flexDirection: "row"
+};
+
 function MenuApp(props: Prop) {
-  const [choiceMenu, setChoiceMenu] = useState(0);
+  const { choiceMenu, onChangeValue } = useMenu(props.navOptions);
+  const theme = useTheme();
 
-  const router = useRouter();
-
-  useEffect(() => {
-    onChangeValue(null, choiceMenu);
-  }, []);
-
-  const onChangeValue = (
-    event: SyntheticEvent<Element, Event> | null,
-    value: any
-  ) => {
-    setChoiceMenu(value);
-    router.push(props.navOptions[value].path);
-  };
+  const isLargerThanMd = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <AppBar position="static">
-      <Box
-        width={"100vw"}
-        display={"flex"}
-        justifyContent="space-between"
-        alignItems={"center"}
-        pl={2}
-        pr={2}
-      >
-        <Box
-          width={"auto"}
-          display={"flex"}
-          flexDirection={"row"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          gap={"20px"}
-        >
+      <Box sx={menuContainerStyle}>
+        <Box sx={titleStyle}>
           <Typography variant="h4" color={Colors.orange}>
-            BRLink
+            Linkados BR
           </Typography>
-          <Typography variant="subtitle2">
-            os melhores links dos melhores produtos
-          </Typography>
+          {isLargerThanMd && (
+            <Typography variant="subtitle2">
+              os melhores links dos melhores produtos
+            </Typography>
+          )}
         </Box>
         <Box>
           <BottomNavigation

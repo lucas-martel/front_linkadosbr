@@ -19,6 +19,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import EditIcon from "@mui/icons-material/Edit";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 // HOOKS --------------------------------------------------------------
 import useFavorite from "./Hooks/useFavorite";
@@ -93,7 +94,13 @@ function ProductCard({ product, isAdmin }: Prop) {
         <CardActions>
           <Tooltip title={myFav ? "Desfavoritar" : "favoritar"} arrow>
             <IconButton onClick={onClickFavorite}>
-              <FavoriteIcon sx={{ color: myFav ? Colors.heart : "#202020" }} />
+              {myFav ? (
+                <FavoriteIcon sx={{ color: Colors.heart }} />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
+
+              {/* <FavoriteIcon sx={{ color: myFav ? Colors.heart : "#202020" }} /> */}
             </IconButton>
           </Tooltip>
           <Tooltip title="copiar link do produto" arrow>

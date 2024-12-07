@@ -16,7 +16,8 @@ import Theme1 from "@/style/Theme1";
 
 export const metadata: Metadata = {
   title: "Os melhores links de produtos - Linkados BR",
-  description: "Aqui na LinkadosBR, você acha produtos muito bem avaliados nas melhores lojas virtuais com apenas um link",
+  description:
+    "Aqui na LinkadosBR, você acha produtos muito bem avaliados nas melhores lojas virtuais com apenas um link",
   authors: [
     {
       name: "lucas leonã martel cavalcante",
@@ -25,7 +26,10 @@ export const metadata: Metadata = {
   ],
   keywords: ["produtos", "links de produtos", "amazon"],
   applicationName: "Linkados BR",
-  creator: "Lucas Martel"
+  creator: "Lucas Martel",
+  other: {
+    "google-site-verification": "JrjhEFlKMvmbx3VLmZnsdDZxl3xE9XH_Nqktannp42w",
+  },
 };
 
 const optionsMenu: TMenuNav[] = [

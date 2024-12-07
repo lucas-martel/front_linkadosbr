@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /gerencia/
+Disallow: /error/
+Disallow: /about
+Disallow: /myLinks

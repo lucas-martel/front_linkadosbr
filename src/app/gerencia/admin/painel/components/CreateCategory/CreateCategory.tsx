@@ -18,8 +18,7 @@ function CreateCategory() {
         { title: catRef.current?.value },
         { withCredentials: true }
       );
-      console.log("categoria criado com sucesso: " + data.data);
-      if (data.status === 200) {
+      if (data.status === 201) {
         alert("categoria criada com sucesso");
       }
     } catch (error: any) {

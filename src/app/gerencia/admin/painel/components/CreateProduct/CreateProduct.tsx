@@ -78,10 +78,8 @@ function CreateProduct() {
         productToCreate,
         { withCredentials: true }
       );
-      console.log(data);
       alert("produto criado com sucesso!" + data.status);
     } catch (error) {
-      console.error(error);
       if (isAxiosError(error)) {
         alert(
           "erro na criacao do produdo" + JSON.stringify(error.response?.data)

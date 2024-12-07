@@ -15,14 +15,17 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import Theme1 from "@/style/Theme1";
 
 export const metadata: Metadata = {
-  title: "LinkadosBR",
-  description: "LinkadosBR",
+  title: "Os melhores links de produtos - Linkados BR",
+  description: "Aqui na LinkadosBR, você acha produtos muito bem avaliados nas melhores lojas virtuais com apenas um link",
   authors: [
     {
       name: "lucas leonã martel cavalcante",
       url: "https://github.com/lucas-martel",
     },
   ],
+  keywords: ["produtos", "links de produtos", "amazon"],
+  applicationName: "Linkados BR",
+  creator: "Lucas Martel"
 };
 
 const optionsMenu: TMenuNav[] = [

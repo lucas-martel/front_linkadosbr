@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '23'
+          node-version: "23"
       - name: Install dependencies
         run: npm ci
       - name: Build project
@@ -26,14 +26,19 @@ jobs:
           fi
       - name: Deploy to gh-pages
         run: |
-          # Configure Git
+          # Configurar Git
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          # Criar ou trocar para a branch gh-pages
+            if git show-ref --verify --quiet refs/heads/gh-pages; then
+              git checkout gh-pages
+            else
+              git checkout --orphan gh-pages
+            fi
 
-          # Criar uma branch órfã e sobrescrever conteúdo
-          git checkout --orphan gh-pages
-          git --work-tree=./out add --all
-          git --work-tree=./out commit -m "Deploy to gh-pages"
+            # Adicionar os arquivos da pasta ./out
+            git --work-tree=./out add --all
+            git --work-tree=./out commit -m "Deploy to gh-pages"
 
-          # Push para a branch gh-pages, sobrescrevendo completamente
-          git push origin gh-pages --force
+            # Forçar o push para sobrescrever a branch gh-pages
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages --force

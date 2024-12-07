@@ -1,7 +1,5 @@
 const nextConfig = {
-  output: "export",
-  basePath: "/front_linkadosbr",
-  assetPrefix: "/front_linkadosbr",
+  output: "export"
 };
 
 export default nextConfig;

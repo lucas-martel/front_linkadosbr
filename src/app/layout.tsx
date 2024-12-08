@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   applicationName: "Linkados BR",
   creator: "Lucas Martel",
   other: {
-    "google-site-verification": "JrjhEFlKMvmbx3VLmZnsdDZxl3xE9XH_Nqktannp42w",
+    "google-site-verification": "JBzsizAs-5JBvMNb0NiWbed3Ih3IKNR7MepM3mpGEkE",
   },
 };
 

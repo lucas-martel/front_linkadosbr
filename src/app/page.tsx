@@ -15,37 +15,40 @@ import {
   Box,
   CircularProgress,
   Skeleton,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import TUrlProductParams from "@/types/TUrlProductParams";
 import EnumPriceOrder from "@/enums/Enum.PriceOrder";
+import TAPI from "@/types/TAPI";
+import Colors from "@/Variables/Colors";
 
 export default function Home() {
   const data = useContext(DataContext);
+  // const data: TAPI = { categories: [], products: [], subs: [] };
   const [productsOnView, setProductsOnView] = useState<TProduct[]>([]);
   const theme = useTheme();
 
   const isBiggerThanMd = useMediaQuery(theme.breakpoints.up("md"));
 
-  // const searchParams = useSearchParams();
-
-  // const params: TUrlProductParams = {
-  //   categoryID: searchParams.get("cat"),
-  //   subcategoryID: searchParams.get("sub"),
-  //   productID: searchParams.get("product"),
-  //   min: parseFloat(searchParams.get("min") ?? "0"),
-  //   max: parseFloat(searchParams.get("max") ?? "10000"),
-  //   order: parseInt(searchParams.get("order") ?? `${EnumPriceOrder.noOrder}`),
-  // };
-
   if (data === null || data === undefined || data.products.length === 0) {
     return (
-      <CircularProgress
-        sx={{ color: "secondary.dark" }}
-        size={theme.spacing(13)}
-      />
+      <Box
+        width={"100%"}
+        height={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        flexDirection={"column"}
+      >
+        <CircularProgress
+          sx={{ color: Colors.orange }}
+          size={theme.spacing(13)}
+        />
+        <Typography color={"white"} fontSize={theme.spacing(2)}>Carregando produtos...</Typography>
+      </Box>
     );
   }
 

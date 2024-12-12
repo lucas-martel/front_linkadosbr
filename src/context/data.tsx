@@ -23,10 +23,13 @@ interface DataProviderProps {
 }
 
 export const DataProvider = ({ children }: DataProviderProps) => {
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
   const requestData = async (resetData: boolean) => {
     const data = sessionStorage.getItem(datakeyName);
     if (data === null || resetData) {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         try {
           const dataAPI = await axios.get(urlData, {
             timeout: 5000,
@@ -34,7 +37,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
           const realData = dataAPI.data as TAPI;
           setDataBase(realData);
           sessionStorage.setItem(datakeyName, JSON.stringify(realData));
-          
+
           return;
         } catch (error) {
           if (axios.isAxiosError(error)) {
@@ -48,10 +51,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
               }
             }
           }
-          if (i < 2) {
+          if (i < 4) {
             // RetryDelay: Aguardar antes de tentar novamente
             console.log(`Aguardando antes da próxima tentativa...`);
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 segundos
+            await delay(7000);
           }
         }
       }
